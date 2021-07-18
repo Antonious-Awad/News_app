@@ -58,3 +58,44 @@ Widget MyDivider() => Container(
       width: double.infinity,
       height: 1,
     );
+
+Widget textField({
+  required TextEditingController Controller,
+  required TextInputType keyboard,
+  Function? onSubmit,
+  Function? onChange,
+  Function? onTap,
+  required Function(String?) valide,
+  required String label,
+  required IconData preIcon,
+  IconData? sufficon,
+  bool password = false,
+  Function? suffixPressed,
+  bool isClickable = true,
+}) =>
+    TextFormField(
+      enabled: isClickable,
+      controller: Controller,
+      obscureText: password,
+      keyboardType: keyboard,
+      onFieldSubmitted: (value) => onSubmit!(value),
+      onChanged: (value) => onChange!(value),
+      validator: (value) => valide(value),
+      decoration: InputDecoration(
+        //hintText: "Enter your email address",
+        labelText: "$label",
+        border: OutlineInputBorder(),
+        prefixIcon: Icon(
+          preIcon,
+        ),
+        suffixIcon: sufficon != null
+            ? IconButton(
+                onPressed: () => suffixPressed!(),
+                icon: Icon(
+                  sufficon,
+                ),
+              )
+            : null,
+      ),
+      onTap: () => onTap!(),
+    );

@@ -3,25 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+
 import 'package:news_app/layouts/cubit/news_cubit.dart';
 import 'package:news_app/layouts/news_layout.dart';
 import 'package:news_app/shared/bloc_observer.dart';
 import 'package:news_app/shared/network/local/cache_helper.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   dioHelper.init();
-  cacheHelper.init();
-  runApp(MyApp());
+  await cacheHelper.init();
+  bool? isDark = cacheHelper.getDate('isDark');
+  runApp(MyApp(isDark!));
 }
 
 class MyApp extends StatelessWidget {
+  final bool isDark;
+  MyApp(this.isDark);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NewsCubit()..getBusiness(),
+      create: (context) => NewsCubit()..getBusiness()..changeTheme(fromShared: isDark),
       child: BlocConsumer<NewsCubit, NewsState>(
         listener: (context, state) {
           // TODO: implement listener
@@ -93,9 +98,7 @@ class MyApp extends StatelessWidget {
                   elevation: 30,
                   unselectedItemColor: Colors.grey),
             ),
-            themeMode: NewsCubit.get(context).isDark
-                ? ThemeMode.light
-                : ThemeMode.dark,
+            themeMode: NewsCubit.get(context).isDark ? ThemeMode.light : ThemeMode.dark,
           );
         },
       ),
