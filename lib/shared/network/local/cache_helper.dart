@@ -9,7 +9,9 @@ class CacheHelper {
   static Future<bool> putDate(String key, bool value) async {
     return await sharedPreferences.setBool(key, value);
   }
+
   static bool? getDate(String key) {
+    return true;
     return sharedPreferences.getBool(key);
   }
 }

@@ -16,7 +16,10 @@ void main() async {
   DioHelper.init();
   await CacheHelper.init();
   bool? isDark = CacheHelper.getDate('isDark');
-  runApp(MyApp(isDark!));
+  if (isDark == null) {
+    runApp(MyApp(true));
+  }else
+  runApp(MyApp(isDark));
 }
 
 class MyApp extends StatelessWidget {
