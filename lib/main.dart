@@ -6,11 +6,13 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:news_app/layouts/cubit/news_cubit.dart';
 import 'package:news_app/layouts/news_layout.dart';
 import 'package:news_app/shared/bloc_observer.dart';
+import 'package:news_app/shared/network/local/cache_helper.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
   dioHelper.init();
+  cacheHelper.init();
   runApp(MyApp());
 }
 
@@ -30,36 +32,35 @@ class MyApp extends StatelessWidget {
             home: Directionality(
                 textDirection: TextDirection.rtl, child: news_layout()),
             theme: ThemeData(
-              primarySwatch: Colors.deepOrange,
-              floatingActionButtonTheme: FloatingActionButtonThemeData(
-                  backgroundColor: Colors.deepOrange),
-              scaffoldBackgroundColor: Colors.white,
-              appBarTheme: AppBarTheme(
-                  iconTheme: IconThemeData(
-                    color: Colors.black,
-                  ),
-                  backwardsCompatibility: false,
-                  systemOverlayStyle: SystemUiOverlayStyle(
-                      statusBarColor: Colors.white,
-                      statusBarIconBrightness: Brightness.dark),
-                  color: Colors.white,
-                  elevation: 0,
-                  titleTextStyle: TextStyle(
+                primarySwatch: Colors.deepOrange,
+                floatingActionButtonTheme: FloatingActionButtonThemeData(
+                    backgroundColor: Colors.deepOrange),
+                scaffoldBackgroundColor: Colors.white,
+                appBarTheme: AppBarTheme(
+                    iconTheme: IconThemeData(
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25),
-                  centerTitle: true),
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: Colors.deepOrange,
-                elevation: 30,
-              ),
-              textTheme: TextTheme(
-                  bodyText1: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black))
-            ),
+                    ),
+                    backwardsCompatibility: false,
+                    systemOverlayStyle: SystemUiOverlayStyle(
+                        statusBarColor: Colors.white,
+                        statusBarIconBrightness: Brightness.dark),
+                    color: Colors.white,
+                    elevation: 0,
+                    titleTextStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25),
+                    centerTitle: true),
+                bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                  type: BottomNavigationBarType.fixed,
+                  selectedItemColor: Colors.deepOrange,
+                  elevation: 30,
+                ),
+                textTheme: TextTheme(
+                    bodyText1: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black))),
             darkTheme: ThemeData(
               textTheme: TextTheme(
                   bodyText1: TextStyle(
@@ -92,7 +93,9 @@ class MyApp extends StatelessWidget {
                   elevation: 30,
                   unselectedItemColor: Colors.grey),
             ),
-            themeMode: NewsCubit.get(context).appmode,
+            themeMode: NewsCubit.get(context).isDark
+                ? ThemeMode.light
+                : ThemeMode.dark,
           );
         },
       ),
