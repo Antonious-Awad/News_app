@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/layouts/cubit/news_cubit.dart';
-import 'package:news_app/shared/network/remote/dio_helper.dart';
+import 'package:news_app/modules/search_screen.dart';
+import 'package:news_app/shared/components/components.dart';
 
-class news_layout extends StatelessWidget {
+// ignore: camel_case_types
+class News_layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewsCubit, NewsState>(
       listener: (context, state) {
+        // ignore: todo
         // TODO: implement listener
       },
       builder: (context, state) {
@@ -19,7 +22,9 @@ class news_layout extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  navigateTo(context, SearchScreen());
+                },
                 icon: Icon(Icons.search),
               ),
               IconButton(
@@ -31,7 +36,7 @@ class news_layout extends StatelessWidget {
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
-            items: cubit.BottomNavItems,
+            items: cubit.bottomNavItems,
             onTap: (index) {
               cubit.changeNavBar(index);
             },

@@ -13,9 +13,9 @@ import 'package:news_app/shared/network/remote/dio_helper.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
-  dioHelper.init();
-  await cacheHelper.init();
-  bool? isDark = cacheHelper.getDate('isDark');
+  DioHelper.init();
+  await CacheHelper.init();
+  bool? isDark = CacheHelper.getDate('isDark');
   runApp(MyApp(isDark!));
 }
 
@@ -26,16 +26,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NewsCubit()..getBusiness()..changeTheme(fromShared: isDark),
+      create: (context) => NewsCubit()
+        ..getBusiness()
+        ..changeTheme(fromShared: isDark),
       child: BlocConsumer<NewsCubit, NewsState>(
         listener: (context, state) {
+          // ignore: todo
           // TODO: implement listener
         },
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             home: Directionality(
-                textDirection: TextDirection.rtl, child: news_layout()),
+                textDirection: TextDirection.rtl, child: News_layout()),
             theme: ThemeData(
                 primarySwatch: Colors.deepOrange,
                 floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -98,7 +101,9 @@ class MyApp extends StatelessWidget {
                   elevation: 30,
                   unselectedItemColor: Colors.grey),
             ),
-            themeMode: NewsCubit.get(context).isDark ? ThemeMode.light : ThemeMode.dark,
+            themeMode: NewsCubit.get(context).isDark
+                ? ThemeMode.light
+                : ThemeMode.dark,
           );
         },
       ),

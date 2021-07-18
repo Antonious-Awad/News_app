@@ -35,3 +35,10 @@ class NewsGetScienceError extends NewsState {
 }
 
 class NewsChangeTheme extends NewsState {}
+
+class NewsGetSearchLoading extends NewsState {}
+class NewsGetSearchSuccess extends NewsState {}
+class NewsGetSearchError extends NewsState {
+  final String error;
+  NewsGetSearchError(this.error);
+}

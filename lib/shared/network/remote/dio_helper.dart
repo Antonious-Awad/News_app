@@ -2,7 +2,7 @@
 //https://newsapi.org/v2/everything?q=tesla&from=2021-06-18&sortBy=publishedAt&apiKey=b0e0dd81a02a4effaf57d863ae37d283
 import 'package:dio/dio.dart';
 
-class dioHelper {
+class DioHelper {
   static Dio? dio;
 
   static init() {
