@@ -112,7 +112,7 @@ Widget textField({
 void navigateTo(BuildContext context, Widget page) =>
     Navigator.push(context, MaterialPageRoute(builder: (context) => page));
 
-Widget articleBuilder(list, context) {
+Widget articleBuilder(list, context,{isSearch = false}) {
   return ConditionalBuilder(
     condition: list.length > 0,
     builder: (context) => ListView.separated(
@@ -120,6 +120,6 @@ Widget articleBuilder(list, context) {
         itemBuilder: (context, index) => newsItem(list[index],context),
         separatorBuilder: (context, index) => myDivider(),
         itemCount: list.length),
-    fallback: (context) => Center(child: CircularProgressIndicator()),
+    fallback: (context) => isSearch? Container(): Center(child: CircularProgressIndicator()),
   );
 }
